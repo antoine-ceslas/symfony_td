@@ -1,0 +1,121 @@
+{% extends './base.html.twig' %}
+
+{% block title %}User Index{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        /* Custom Styles */
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            color: #495057;
+        }
+
+        tbody tr:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+
+        tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .btn {
+            text-decoration: none;
+            padding: 5px 10px;
+            color: #fff;
+            border-radius: 3px;
+            font-size: 14px;
+            margin: 10px 0;
+        }
+
+        .btn-edit {
+            background-color: #007bff;
+        }
+
+        .btn-edit:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-delete {
+            background-color: #dc3545;
+        }
+
+        .btn-delete:hover {
+            background-color: #c82333;
+        }
+
+        .btn-create {
+            display: inline-block;
+            background-color: #28a745;
+            padding: 10px 15px;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+
+        .btn-create:hover {
+            background-color: #218838;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <h1>Users  <a href="{{ path('user_profile') }}" >Profile</a></h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Email</th>
+            <th>Roles</th>
+            <th>Name</th>
+            <th>PhoneNumber</th>
+            <th>Reservations</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.phoneNumber }}</td>
+                <td>
+                    <a  href="{{ path('user_reservations_list', {'id': user.id}) }}">Reservations</a>
+                </td>
+                <td>
+                    <a href="{{ path('admin_users_edit', {'id': user.id}) }}" class="btn btn-edit">Edit</a>
+                    {{ include('admin/user/_delete_form.html.twig') }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">No records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_users_create') }}" class="btn-create">Create New</a>
+{% endblock %}

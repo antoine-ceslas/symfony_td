@@ -1,0 +1,16 @@
+{% extends './base.html.twig' %}
+
+{% block title %}Edit My Profile{% endblock %}
+
+{% block body %}
+    <h1>Edit My Profile</h1>
+
+    <div class="form-container">
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button class="btn btn-primary">Save Changes</button>
+        {{ form_end(form) }}
+    </div>
+
+    <a href="{{ path('user_profile') }}" class="btn btn-back">Back to Profile</a>
+{% endblock %}
